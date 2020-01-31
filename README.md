@@ -1,4 +1,4 @@
-# CSX42: Assignment 1
+# CS542: Assignment 1
 ## Name: Kenneth Peter Fernandes
 
 -----------------------------------------------------------------------
