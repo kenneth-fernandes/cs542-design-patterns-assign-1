@@ -1,9 +1,12 @@
 package wordPlay.driver;
 
 /**
- * @author John Doe
+ * @author Kenneth Fernandes
  *
  */
+
+import wordPlay.util.*;
+
 public class Driver {
 	public static void main(String[] args) {
 
@@ -18,9 +21,8 @@ public class Driver {
 			System.exit(0);
 		}
 
-		for (int i = 0; i < args.length; i += 1) {
-			System.out.println("Args " + (i + 1) + " : " + args[i]);
-		}
+		FileProcessor fp = new FileProcessor(args);
+		fp.processFile();
 
 	}
 }
