@@ -16,7 +16,7 @@ public class Driver {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 3 arguments.");
 			System.exit(0);
 		}
-		System.out.println("Hello World! Lets get started with the assignment");
+		System.out.println("Hello World!");
 
 	}
 }
