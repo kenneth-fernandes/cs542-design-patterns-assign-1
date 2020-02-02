@@ -32,8 +32,7 @@ public class FileProcessor {
                     sentenceCharArr[index] = (char) i;
                     charCount += 1;
                     if (((char) i) == '.') {
-                        sentHandle.processSentence(String.copyValueOf(sentenceCharArr).substring(startIndex, charCount),
-                                charCount);
+                        sentHandle.processSentence(String.copyValueOf(sentenceCharArr), charCount);
                         Arrays.fill(sentenceCharArr, '\0');
                         startIndex = charCount;
                         charCount = 0;
