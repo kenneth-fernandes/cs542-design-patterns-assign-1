@@ -26,11 +26,18 @@ public class FileProcessor {
 
                 int i = fileReader.read();
                 int index = 0;
+                int charCount = 0;
+                int startIndex = 0;
                 while (i != -1) {
                     sentenceCharArr[index] = (char) i;
+                    charCount += 1;
                     if (((char) i) == '.') {
-                        sentHandle.processSentence(new String(sentenceCharArr));
+                        sentHandle.processSentence(String.copyValueOf(sentenceCharArr).substring(startIndex, charCount),
+                                charCount);
                         Arrays.fill(sentenceCharArr, '\0');
+                        startIndex = charCount;
+                        charCount = 0;
+
                     }
                     index += 1;
                     i = fileReader.read();
