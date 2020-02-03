@@ -9,7 +9,8 @@ public class FileProcessor {
     private String inputFilePath;
     private String outputFilePath;
     private String metricsFilePath;
-    private char[] sentenceCharArr = new char[2096];
+
+    private char[] sentenceCharArr = new char[1024];
 
     public FileProcessor(String[] files) {
         this.inputFilePath = files[0];
@@ -17,40 +18,43 @@ public class FileProcessor {
         this.metricsFilePath = files[2];
     }
 
-    public void processFile() {
+    public void processFiles() {
+        processInputFile();
+    }
+
+    private void processInputFile() {
         try {
             File inputFile = new File(inputFilePath);
             if (inputFile.exists()) {
-                FileReader fileReader = new FileReader(inputFilePath);
+                FileReader inputFileReader = new FileReader(inputFilePath);
                 SentenceHandler sentHandle = new SentenceHandler();
 
-                int i = fileReader.read();
+                int i = inputFileReader.read();
                 int index = 0;
                 int charCount = 0;
-                int startIndex = 0;
                 while (i != -1) {
                     sentenceCharArr[index] = (char) i;
                     charCount += 1;
                     if (((char) i) == '.') {
-                        sentHandle.processSentence(String.copyValueOf(sentenceCharArr), charCount);
-                        Arrays.fill(sentenceCharArr, '\0');
-                        startIndex = charCount;
-                        charCount = 0;
 
+                        sentHandle.processSentence(String.copyValueOf(sentenceCharArr), charCount);
+
+                        Arrays.fill(sentenceCharArr, '\0');
+                        index = -1;
+                        charCount = 0;
                     }
                     index += 1;
-                    i = fileReader.read();
+                    i = inputFileReader.read();
                 }
 
-                fileReader.close();
+                inputFileReader.close();
             } else {
-
+                System.out.println("Input file doesnt exist.");
             }
 
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            System.out.println(e.getMessage());
         }
-
     }
 
 }

@@ -22,7 +22,7 @@ public class Driver {
 		}
 
 		FileProcessor fp = new FileProcessor(args);
-		fp.processFile();
+		fp.processFiles();
 
 	}
 }
