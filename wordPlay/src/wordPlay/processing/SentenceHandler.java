@@ -8,10 +8,8 @@ public class SentenceHandler {
 
     private Pattern p1 = Pattern.compile("[a-zA-Z0-9\\.\\s]");
     private Pattern p2 = Pattern.compile(" \\n|\\n\\n|  ");
-    private Pattern p3 = Pattern.compile("[a-zA-Z0-9]");
     private Matcher m;
     private int sentenceCharsLength;
-    private String[] words;
     private int[] newLinePositionArr;
 
     private int newLineCount;
@@ -22,10 +20,6 @@ public class SentenceHandler {
         if (isSentenceValid(sentence)) {
 
             String[] words = sentence.split("[\\s\\.]");
-
-            // String reversedStr = sentence.charAt(0) == ' ' ? " " +
-            // getReversedWrdsStr(words)
-            // : getReversedWrdsStr(words);
 
             String reversedStr = getReversedWrdsStr(words);
 
@@ -43,11 +37,11 @@ public class SentenceHandler {
                 }
 
             }
+
+            MetricsCalculation.performMetricsCalculation(reversedStr, newLinePositionArr.length);
+
             newLinePositionArr = null;
 
-            System.out.println(sentenceCharsLength == reversedStr.length());
-
-            // System.out.print("Sentence is valid.");
         } else {
 
             System.out.print("Sentence is invalid.");
