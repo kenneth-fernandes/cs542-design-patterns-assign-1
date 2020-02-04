@@ -4,6 +4,7 @@
   <property name="src" value="src" />
   <property name="BUILD" value="src/BUILD" />
   <property name="classes" value="${BUILD}/classes" />
+  <property name="resultFiles" value="${BUILD}/resultFiles" />
 
   <target name="all" depends="compile_all" />
 
@@ -17,6 +18,7 @@
   <target name="prepare">
     <mkdir dir="${BUILD}" />
     <mkdir dir="${classes}" />
+    <mkdir dir="${resultFiles}" />
   </target>
 
   <target name="jar">

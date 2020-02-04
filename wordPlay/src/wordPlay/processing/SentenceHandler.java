@@ -12,9 +12,9 @@ public class SentenceHandler {
     private int sentenceCharsLength;
     private int[] newLinePositionArr;
 
-    private int newLineCount;
+    public int newLineCount;
 
-    public void processSentence(String sentence, int charsLength) {
+    public String processSentence(String sentence, int charsLength) {
         this.sentenceCharsLength = charsLength;
 
         if (isSentenceValid(sentence)) {
@@ -37,14 +37,12 @@ public class SentenceHandler {
                 }
 
             }
-
-            MetricsCalculation.performMetricsCalculation(reversedStr, newLinePositionArr.length);
-
             newLinePositionArr = null;
 
-        } else {
+            return reversedStr;
 
-            System.out.print("Sentence is invalid.");
+        } else {
+            return "";
         }
     }
 
@@ -78,7 +76,7 @@ public class SentenceHandler {
     private String getReversedWrdsStr(String[] words) {
 
         String reversedStr = "";
-        for (int i = 0; i < words.length - 1; i += 1) {
+        for (int i = 0; i < words.length; i += 1) {
             String reversedWrd = "";
 
             if (words[i] == "") {
