@@ -35,6 +35,7 @@ Note: Arguments accept the absolute path of the files.
 ## Description:
  1. Assumptions:
  - The sentences are equally spaced between two words.
+ - Sentences ends with a period.
 
 -----------------------------------------------------------------------
 ### Academic Honesty statement:

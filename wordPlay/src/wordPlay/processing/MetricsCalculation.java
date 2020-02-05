@@ -4,68 +4,49 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class MetricsCalculation {
-    private static int totalWrdCount = 0;
-    private static int totalCharCount = 0;
-    public static float avgNoOfWrds = 0.00f;
-    public static float avgNoOfChars = 0.00f;
-    public static String maxFreqWrd = "";
-    public static String longstWrd = "";
+    private int totalWrdCount;
+    private int totalCharCount;
+    public float avgNoOfWrds = 0.00f;
+    public float avgNoOfChars = 0.00f;
+    public String maxFreqWrd = "";
+    public String longstWrd = "";
+    private int sentencesProcessed;
 
-    public static void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
+    public void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
 
-        calcWrdCount(finalSentence);
+        sentencesProcessed += 1;
 
-        calcCharCount(finalSentence, newLineCharsCount);
+        calculateAvgNoOfWords(finalSentence);
 
-        // calculateAvgNoOfWords(finalSentence);
-
-        // calculateAvgNoOfChars(finalSentence, newLineCharsCount);
+        calculateAvgNoOfChars(finalSentence, newLineCharsCount);
 
         findLongestWrd(initialSentence);
 
     }
 
-    private static void calcWrdCount(String finalSentence) {
-        String[] words = finalSentence.split("[\\s\\.0-9]");
-
-        for (String str : words) {
-            if (str != "") {
-                totalWrdCount += 1;
-            }
-        }
-
-    }
-
-    private static void calcCharCount(String finalSentence, int newLineCharsCount) {
-
-        char[] sentenceCharArr = finalSentence.toCharArray();
-
-        totalCharCount += (sentenceCharArr.length - newLineCharsCount);
-
-    }
-
-    private static void calculateAvgNoOfWords(String finalSentence) {
-        String[] words = finalSentence.split("[\\s\\.0-9]");
+    private void calculateAvgNoOfWords(String finalSentence) {
+        String[] words = finalSentence.split("[\\s\\.]");
         int count = 0;
         for (String str : words) {
 
             count = !str.isEmpty() ? count + 1 : count + 0;
         }
-        avgNoOfWrds = avgNoOfChars == 0 ? avgNoOfChars + count : (avgNoOfWrds + count) / 2;
+        totalWrdCount += count;
+
+        avgNoOfWrds = ((float) totalWrdCount / (float) sentencesProcessed);
         avgNoOfWrds = roundNumber(avgNoOfWrds);
-        System.out.println(roundNumber(avgNoOfWrds));
     }
 
-    private static void calculateAvgNoOfChars(String finalSentence, int newLineCharsCount) {
+    private void calculateAvgNoOfChars(String finalSentence, int newLineCharsCount) {
         char[] sentenceCharArr = finalSentence.toCharArray();
+        totalCharCount += (sentenceCharArr.length - newLineCharsCount);
 
-        avgNoOfChars = (avgNoOfChars + (sentenceCharArr.length - newLineCharsCount)) / 2;
+        avgNoOfChars = (float) totalCharCount / (float) sentencesProcessed;
 
         avgNoOfChars = roundNumber(avgNoOfChars);
-        System.out.println(roundNumber(avgNoOfChars));
     }
 
-    private static void findLongestWrd(String initialSentence) {
+    private void findLongestWrd(String initialSentence) {
         String[] words = initialSentence.trim().split("[\\s\\.]");
         for (String word : words) {
             if (word.toLowerCase().length() > longstWrd.toLowerCase().length()) {
@@ -73,12 +54,11 @@ public class MetricsCalculation {
             }
 
         }
-        System.out.println(longstWrd);
     }
 
-    private static float roundNumber(float number) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.CEILING);
+    private float roundNumber(float number) {
+        DecimalFormat df = new DecimalFormat("");
+        df.setMaximumFractionDigits(2);
         return Float.parseFloat(df.format(number));
     }
 }

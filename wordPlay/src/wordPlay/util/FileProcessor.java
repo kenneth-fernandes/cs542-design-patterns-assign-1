@@ -27,16 +27,18 @@ public class FileProcessor {
         try {
             File inputFile = new File(inputFilePath);
             if (inputFile.exists()) {
+
                 FileReader inputFileReader = new FileReader(inputFilePath);
                 SentenceHandler sentHandle = new SentenceHandler();
                 Results resultsObj = new Results();
+                MetricsCalculation metricCalnObj = new MetricsCalculation();
 
                 String initialSentence = "";
                 String reversedStr = "";
 
                 int i = inputFileReader.read();
                 int index = 0;
-                // int sentencesProcessed = 0;
+                int sentencesProcessed = 0;
                 int sentenceCharCount = 0;
 
                 while (i != -1) {
@@ -55,11 +57,10 @@ public class FileProcessor {
 
                         resultsObj.writeResultSentencesToFile(outputFilePath);
 
-                        MetricsCalculation.performMetricsCalculation(initialSentence, reversedStr,
-                                sentHandle.newLineCount);
+                        metricCalnObj.performMetricsCalculation(initialSentence, reversedStr, sentHandle.newLineCount);
 
-                        resultsObj.setResultMetrics(MetricsCalculation.avgNoOfWrds, MetricsCalculation.avgNoOfChars,
-                                MetricsCalculation.maxFreqWrd, MetricsCalculation.longstWrd);
+                        resultsObj.setResultMetrics(metricCalnObj.avgNoOfWrds, metricCalnObj.avgNoOfChars,
+                                metricCalnObj.maxFreqWrd, metricCalnObj.longstWrd);
 
                         resultsObj.isMetricsFilePath = true;
 
