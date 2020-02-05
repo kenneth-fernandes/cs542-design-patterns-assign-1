@@ -2,30 +2,23 @@ package wordPlay.processing;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.util.Arrays;
 
 public class SentenceHandler {
 
     private Pattern p1 = Pattern.compile("[a-zA-Z0-9\\.\\s]");
     private Pattern p2 = Pattern.compile(" \\n|\\n\\n|  ");
-    private Pattern p3 = Pattern.compile("[a-zA-Z0-9]");
     private Matcher m;
     private int sentenceCharsLength;
-    private String[] words;
     private int[] newLinePositionArr;
 
-    private int newLineCount;
+    public int newLineCount;
 
-    public void processSentence(String sentence, int charsLength) {
+    public String processSentence(String sentence, int charsLength) {
         this.sentenceCharsLength = charsLength;
 
         if (isSentenceValid(sentence)) {
 
             String[] words = sentence.split("[\\s\\.]");
-
-            // String reversedStr = sentence.charAt(0) == ' ' ? " " +
-            // getReversedWrdsStr(words)
-            // : getReversedWrdsStr(words);
 
             String reversedStr = getReversedWrdsStr(words);
 
@@ -45,12 +38,10 @@ public class SentenceHandler {
             }
             newLinePositionArr = null;
 
-            System.out.println(sentenceCharsLength == reversedStr.length());
+            return reversedStr;
 
-            // System.out.print("Sentence is valid.");
         } else {
-
-            System.out.print("Sentence is invalid.");
+            return "";
         }
     }
 
@@ -84,7 +75,7 @@ public class SentenceHandler {
     private String getReversedWrdsStr(String[] words) {
 
         String reversedStr = "";
-        for (int i = 0; i < words.length - 1; i += 1) {
+        for (int i = 0; i < words.length; i += 1) {
             String reversedWrd = "";
 
             if (words[i] == "") {

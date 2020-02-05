@@ -26,7 +26,7 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 -----------------------------------------------------------------------
 ## Instruction to run:
 
-####Command: ant -buildfile wordPlay/src/build.xml run -Darg0="input.txt" -Darg1="output.txt" -Darg2="metrics.txt"
+####Command: ant -buildfile wordPlay/src/build.xml run -Darg0="src/wordPlay/inputFiles/input.txt" -Darg1="src/BUILD/resultFiles/output.txt" -Darg2="src/BUILD/resultFiles/metrics.txt"
 
 Note: Arguments accept the absolute path of the files.
 
@@ -35,6 +35,7 @@ Note: Arguments accept the absolute path of the files.
 ## Description:
  1. Assumptions:
  - The sentences are equally spaced between two words.
+ - Sentences ends with a period.
 
 -----------------------------------------------------------------------
 ### Academic Honesty statement:
