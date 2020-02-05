@@ -1,7 +1,6 @@
 package wordPlay.util;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.File;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {

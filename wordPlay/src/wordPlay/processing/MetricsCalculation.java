@@ -1,31 +1,39 @@
 package wordPlay.processing;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Comparator;
 
 public class MetricsCalculation {
+
     private int totalWrdCount;
     private int totalCharCount;
-    public float avgNoOfWrds = 0.00f;
-    public float avgNoOfChars = 0.00f;
+    public float avgNoOfWrds;
+    public float avgNoOfChars;
     public String maxFreqWrd = "";
     public String longstWrd = "";
     private int sentencesProcessed;
+    HashMap<String, Integer> wrdFreqMap = new HashMap<>();
 
     public void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
 
         sentencesProcessed += 1;
 
-        calculateAvgNoOfWords(finalSentence);
+        String[] words = initialSentence.trim().split("[\\s\\.]");
 
-        calculateAvgNoOfChars(finalSentence, newLineCharsCount);
+        calculateAvgNoOfWords(words);
 
-        findLongestWrd(initialSentence);
+        calculateAvgNoOfChars(initialSentence, newLineCharsCount);
+
+        calculateMostFreqWrd(words);
+
+        findLongestWrd(words);
 
     }
 
-    private void calculateAvgNoOfWords(String finalSentence) {
-        String[] words = finalSentence.split("[\\s\\.]");
+    private void calculateAvgNoOfWords(String[] words) {
         int count = 0;
         for (String str : words) {
 
@@ -37,8 +45,8 @@ public class MetricsCalculation {
         avgNoOfWrds = roundNumber(avgNoOfWrds);
     }
 
-    private void calculateAvgNoOfChars(String finalSentence, int newLineCharsCount) {
-        char[] sentenceCharArr = finalSentence.toCharArray();
+    private void calculateAvgNoOfChars(String initialSentence, int newLineCharsCount) {
+        char[] sentenceCharArr = initialSentence.toCharArray();
         totalCharCount += (sentenceCharArr.length - newLineCharsCount);
 
         avgNoOfChars = (float) totalCharCount / (float) sentencesProcessed;
@@ -46,8 +54,33 @@ public class MetricsCalculation {
         avgNoOfChars = roundNumber(avgNoOfChars);
     }
 
-    private void findLongestWrd(String initialSentence) {
-        String[] words = initialSentence.trim().split("[\\s\\.]");
+    private void calculateMostFreqWrd(String[] words) {
+
+        for (String word : words) {
+            if (wrdFreqMap.containsKey(word)) {
+                wrdFreqMap.put(word, wrdFreqMap.get(word) + 1);
+            } else {
+                wrdFreqMap.put(word, 1);
+            }
+        }
+
+        TreeMap<String, Integer> sortedWrdFreqTMap = getSortedMapByValue(wrdFreqMap);
+
+        maxFreqWrd = sortedWrdFreqTMap.firstEntry().getKey();
+    }
+
+    private TreeMap<String, Integer> getSortedMapByValue(Map<String, Integer> wrdFreqMap) {
+        Comparator<String> comparator = new ValueComparator(wrdFreqMap);
+
+        TreeMap<String, Integer> sortedWrdFreqTMap = new TreeMap<String, Integer>(comparator);
+
+        sortedWrdFreqTMap.putAll(wrdFreqMap);
+
+        return sortedWrdFreqTMap;
+    }
+
+    private void findLongestWrd(String[] words) {
+
         for (String word : words) {
             if (word.toLowerCase().length() > longstWrd.toLowerCase().length()) {
                 longstWrd = word;
@@ -57,8 +90,8 @@ public class MetricsCalculation {
     }
 
     private float roundNumber(float number) {
-        DecimalFormat df = new DecimalFormat("");
-        df.setMaximumFractionDigits(2);
+        DecimalFormat df = new DecimalFormat("#.##");
         return Float.parseFloat(df.format(number));
     }
+
 }

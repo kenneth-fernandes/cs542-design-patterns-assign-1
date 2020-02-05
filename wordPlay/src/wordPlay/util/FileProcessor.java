@@ -38,7 +38,6 @@ public class FileProcessor {
 
                 int i = inputFileReader.read();
                 int index = 0;
-                int sentencesProcessed = 0;
                 int sentenceCharCount = 0;
 
                 while (i != -1) {
