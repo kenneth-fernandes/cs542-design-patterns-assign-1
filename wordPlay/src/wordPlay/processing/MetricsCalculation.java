@@ -1,5 +1,6 @@
 package wordPlay.processing;
 
+import wordPlay.util.UtilityConstants;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,14 +9,27 @@ import java.util.Comparator;
 
 public class MetricsCalculation {
 
+    private UtilityConstants utilityConstants;
     private int totalWrdCount;
     private int totalCharCount;
     public float avgNoOfWrds;
     public float avgNoOfChars;
-    public String maxFreqWrd = "";
-    public String longstWrd = "";
+    public String maxFreqWrd;
+    public String longstWrd;
     private int sentencesProcessed;
     private HashMap<String, Integer> wrdFreqMap = new HashMap<>();
+
+    /**
+     * MetricsCalulation class constructor for setting utility constants object
+     * handle ans setting empty strings
+     * 
+     * @param utilityConstants - Utility constant object
+     */
+    public MetricsCalculation(UtilityConstants utilityConstants) {
+        this.utilityConstants = utilityConstants;
+        this.maxFreqWrd = utilityConstants.emptyString;
+        this.longstWrd = utilityConstants.emptyString;
+    }
 
     /**
      * Function to calculate metrics for the input sentences
@@ -28,7 +42,7 @@ public class MetricsCalculation {
 
         sentencesProcessed += 1;
 
-        String[] words = initialSentence.trim().split("[\\s\\.]");
+        String[] words = initialSentence.trim().split(utilityConstants.splitBySpacingRegExp);
 
         calculateAvgNoOfWords(words);
 
@@ -130,7 +144,7 @@ public class MetricsCalculation {
      * @return - The rounded float value of a number
      */
     private float roundNumber(float number) {
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat(utilityConstants.decimalFormatString);
         return Float.parseFloat(df.format(number));
     }
 

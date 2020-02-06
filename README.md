@@ -34,8 +34,9 @@ Note: Arguments accept the absolute path of the files.
 -----------------------------------------------------------------------
 ## Description:
  1. Assumptions:
- - The sentences are equally spaced between two words.
- - Sentences ends with a period.
+ - Input file is well formatted with sentences that are equally spaced between two words and ends with a period.
+ - Absoulte path of the files to be passed as input arguments while executing the program.
+ - Input arguments to the run command are in the order input.txt file path, output.txt file path, metrics.txt file path
 
 -----------------------------------------------------------------------
 ### Academic Honesty statement:

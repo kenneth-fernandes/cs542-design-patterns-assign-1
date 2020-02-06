@@ -2,8 +2,10 @@ package wordPlay.util;
 
 import java.io.FileWriter;
 import java.io.File;
+import wordPlay.util.UtilityConstants;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
+    private UtilityConstants utilityConstants;
     private String reversedWrdsSentence;
     private String initialSentence;
     private float avgNoOfWrds;
@@ -14,10 +16,19 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     public boolean isMetricsFilePath;
 
     /**
+     * Resuls class constructor for setting the constants object
+     * 
+     * @param utilityConstants - Utility constants object
+     */
+    public Results(UtilityConstants utilityConstants) {
+        this.utilityConstants = utilityConstants;
+    }
+
+    /**
      * Function to set values for input and output sentences
      * 
-     * @param initialSentence
-     * @param reversedWrdsSentence
+     * @param initialSentence      - The sentence from input text
+     * @param reversedWrdsSentence - The sentence after text words are reversed
      */
     public void setResultSentences(String initialSentence, String reversedWrdsSentence) {
         this.initialSentence = initialSentence;
@@ -27,10 +38,10 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     /**
      * Function to set metrics that have been calculated for the sentences
      * 
-     * @param avgNoOfWrds
-     * @param avgNoOfChars
-     * @param maxFreqWrd
-     * @param longstWrd
+     * @param avgNoOfWrds  - Average of number of words in sentences
+     * @param avgNoOfChars - Average of number of characters in sentences
+     * @param maxFreqWrd   - Most frequent word in the input file
+     * @param longstWrd    - Longest word in the file
      */
     public void setResultMetrics(float avgNoOfWrds, float avgNoOfChars, String maxFreqWrd, String longstWrd) {
         this.avgNoOfWrds = avgNoOfWrds;
@@ -42,7 +53,8 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     /**
      * Function to write the reversed words sentences the the output file
      * 
-     * @param outputFilePath
+     * @param outputFilePath - Path of output text file used for storing reversed
+     *                       words sentences
      */
     public void writeResultSentencesToFile(String outputFilePath) {
         writeDataToFile(reversedWrdsSentence.toCharArray(), outputFilePath);
@@ -52,19 +64,22 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
      * Function to write the metrics calculated for the input sentences to metrics
      * file
      * 
-     * @param metricsFilePath
+     * @param metricsFilePath - Path of metrics text file used for metrics for input
+     *                        sentences
      */
     public void writeResultMetricsToFile(String metricsFilePath) {
-        String metricsOutputStr = "AVG_NUMBER_WORDS_PER_SENTENCE = " + avgNoOfWrds + "\nAVG_NUM_CHARS_PER_SENTENCE = "
-                + avgNoOfChars + "\nMAX_FREQ_WORD = " + maxFreqWrd + "\nLONGEST_WORD = " + longstWrd;
+        String metricsOutputStr = utilityConstants.averageNoOfWrdsString + avgNoOfWrds + utilityConstants.newLineString
+                + utilityConstants.averageNoOCharsString + avgNoOfChars + utilityConstants.newLineString
+                + utilityConstants.maxFrequencyWrdsString + maxFreqWrd + utilityConstants.newLineString
+                + utilityConstants.longstWrdsString + longstWrd;
         writeDataToFile(metricsOutputStr.toCharArray(), metricsFilePath);
     }
 
     /**
      * Function to write date into the file.
      * 
-     * @param charArr
-     * @param filePath
+     * @param charArr  - Arrays of sentences characters
+     * @param filePath - Path of the file to write the output data
      */
     private void writeDataToFile(char[] charArr, String filePath) {
         try {
@@ -85,9 +100,10 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
             outputFileWrtrObj.close();
 
         } catch (Exception e) {
+            System.out.println(utilityConstants.lineSeparator);
+            System.out.println(utilityConstants.fileWritingErrorMsg);
+            e.printStackTrace();
 
-            System.out.println("Failure in writing to file.");
         }
     }
-
 }
