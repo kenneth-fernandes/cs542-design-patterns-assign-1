@@ -10,9 +10,15 @@ public class SentenceHandler {
     private Matcher m;
     private int sentenceCharsLength;
     private int[] newLinePositionArr;
-
     public int newLineCount;
 
+    /**
+     * Function to start processing of the sentence
+     * 
+     * @param sentence    - The sentence from input text file
+     * @param charsLength - The length of characters of the sentence
+     * @return - Reversed string or empty string
+     */
     public String processSentence(String sentence, int charsLength) {
         this.sentenceCharsLength = charsLength;
 
@@ -45,6 +51,12 @@ public class SentenceHandler {
         }
     }
 
+    /**
+     * Function to check if the sentence is valid or not
+     * 
+     * @param sentence - Sentence of the input text file
+     * @return - Retruns if the sentence is valid or not
+     */
     private boolean isSentenceValid(String sentence) {
 
         m = p1.matcher(sentence);
@@ -69,9 +81,16 @@ public class SentenceHandler {
         while (m.find()) {
             count = count + 1;
         }
+
         return count == 0 ? true : false;
     }
 
+    /**
+     * Function to reverese the words in a sentence
+     * 
+     * @param words Array of words of a sentence
+     * @return Returns the reversed words string
+     */
     private String getReversedWrdsStr(String[] words) {
 
         String reversedStr = "";

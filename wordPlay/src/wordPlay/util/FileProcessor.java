@@ -11,24 +11,31 @@ public class FileProcessor {
     private String outputFilePath;
     private String metricsFilePath;
 
+    private FileReader inputFileReader;
     private char[] sentenceCharArr = new char[1024];
 
+    /**
+     * Constructor to set file paths from command line input
+     * 
+     * @param files - Array of command line arguments containing file path
+     */
     public FileProcessor(String[] files) {
         this.inputFilePath = files[0];
         this.outputFilePath = files[1];
         this.metricsFilePath = files[2];
     }
 
-    public void processFiles() {
-        processInputFile();
-    }
-
-    private void processInputFile() {
+    /**
+     * 
+     * Function to proces input file
+     */
+    public void processInputFile() {
+        File inputFile = new File(inputFilePath);
         try {
-            File inputFile = new File(inputFilePath);
+
             if (inputFile.exists()) {
 
-                FileReader inputFileReader = new FileReader(inputFilePath);
+                inputFileReader = new FileReader(inputFilePath);
                 SentenceHandler sentHandle = new SentenceHandler();
                 Results resultsObj = new Results();
                 MetricsCalculation metricCalnObj = new MetricsCalculation();
@@ -40,48 +47,63 @@ public class FileProcessor {
                 int index = 0;
                 int sentenceCharCount = 0;
 
-                while (i != -1) {
-                    sentenceCharArr[index] = (char) i;
-                    sentenceCharCount += 1;
-                    if (((char) i) == '.') {
+                if (i != -1) {
+                    while (i != -1) {
+                        sentenceCharArr[index] = (char) i;
+                        sentenceCharCount += 1;
+                        if (((char) i) == '.') {
 
-                        initialSentence = String.copyValueOf(sentenceCharArr).substring(0, index + 1);
+                            initialSentence = String.copyValueOf(sentenceCharArr).substring(0, index + 1);
 
-                        reversedStr = sentHandle.processSentence(initialSentence, sentenceCharCount);
+                            reversedStr = sentHandle.processSentence(initialSentence, sentenceCharCount);
+                            if (!reversedStr.equals("")) {
+                                resultsObj.sentencesProcessed += 1;
 
-                        resultsObj.sentencesProcessed += 1;
+                                resultsObj.setResultSentences(initialSentence, reversedStr);
+                                resultsObj.isMetricsFilePath = false;
 
-                        resultsObj.setResultSentences(initialSentence, reversedStr);
-                        resultsObj.isMetricsFilePath = false;
+                                resultsObj.writeResultSentencesToFile(outputFilePath);
 
-                        resultsObj.writeResultSentencesToFile(outputFilePath);
+                                metricCalnObj.performMetricsCalculation(initialSentence, reversedStr,
+                                        sentHandle.newLineCount);
 
-                        metricCalnObj.performMetricsCalculation(initialSentence, reversedStr, sentHandle.newLineCount);
+                                resultsObj.setResultMetrics(metricCalnObj.avgNoOfWrds, metricCalnObj.avgNoOfChars,
+                                        metricCalnObj.maxFreqWrd, metricCalnObj.longstWrd);
 
-                        resultsObj.setResultMetrics(metricCalnObj.avgNoOfWrds, metricCalnObj.avgNoOfChars,
-                                metricCalnObj.maxFreqWrd, metricCalnObj.longstWrd);
+                                resultsObj.isMetricsFilePath = true;
 
-                        resultsObj.isMetricsFilePath = true;
+                                resultsObj.writeResultMetricsToFile(metricsFilePath);
 
-                        resultsObj.writeResultMetricsToFile(metricsFilePath);
+                                Arrays.fill(sentenceCharArr, '\0');
 
-                        Arrays.fill(sentenceCharArr, '\0');
+                                index = -1;
+                                sentenceCharCount = 0;
+                            } else {
+                                System.out.println("The input file contains contains invalid characters.");
+                                break;
+                            }
 
-                        index = -1;
-                        sentenceCharCount = 0;
+                        }
+                        index += 1;
+                        i = inputFileReader.read();
                     }
-                    index += 1;
-                    i = inputFileReader.read();
+                } else {
+                    System.out.println("File is empty. Please enter some text in the file. ");
                 }
 
-                inputFileReader.close();
             } else {
                 System.out.println("Input file doesnt exist.");
             }
+            if (inputFileReader == null) {
+                inputFileReader.close();
+            }
 
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not present in the directory.");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Exception occured! Printing Stacktrace: -");
+            e.printStackTrace();
         }
-    }
 
+    }
 }

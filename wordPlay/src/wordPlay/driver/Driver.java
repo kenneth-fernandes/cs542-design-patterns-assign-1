@@ -8,6 +8,11 @@ package wordPlay.driver;
 import wordPlay.util.*;
 
 public class Driver {
+	/**
+	 * The entry point of the program - main method
+	 * 
+	 * @param args - Command line arguments array
+	 */
 	public static void main(String[] args) {
 
 		/*
@@ -22,7 +27,8 @@ public class Driver {
 		}
 
 		FileProcessor fp = new FileProcessor(args);
-		fp.processFiles();
+
+		fp.processInputFile();
 
 	}
 }

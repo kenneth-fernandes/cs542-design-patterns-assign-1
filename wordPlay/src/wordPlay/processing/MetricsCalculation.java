@@ -15,8 +15,15 @@ public class MetricsCalculation {
     public String maxFreqWrd = "";
     public String longstWrd = "";
     private int sentencesProcessed;
-    HashMap<String, Integer> wrdFreqMap = new HashMap<>();
+    private HashMap<String, Integer> wrdFreqMap = new HashMap<>();
 
+    /**
+     * Function to calculate metrics for the input sentences
+     * 
+     * @param initialSentence   - The sentence from input text
+     * @param finalSentence     - The sentence after text words are reversed
+     * @param newLineCharsCount - Count of new line characters
+     */
     public void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
 
         sentencesProcessed += 1;
@@ -33,6 +40,11 @@ public class MetricsCalculation {
 
     }
 
+    /**
+     * Function to calculate average number of words
+     * 
+     * @param words - Array of words from the sentence
+     */
     private void calculateAvgNoOfWords(String[] words) {
         int count = 0;
         for (String str : words) {
@@ -45,6 +57,12 @@ public class MetricsCalculation {
         avgNoOfWrds = roundNumber(avgNoOfWrds);
     }
 
+    /**
+     * Function to calculate average number of characters in a sentences
+     * 
+     * @param initialSentence   - The sentence from input text
+     * @param newLineCharsCount - Count of new line characters
+     */
     private void calculateAvgNoOfChars(String initialSentence, int newLineCharsCount) {
         char[] sentenceCharArr = initialSentence.toCharArray();
         totalCharCount += (sentenceCharArr.length - newLineCharsCount);
@@ -54,6 +72,11 @@ public class MetricsCalculation {
         avgNoOfChars = roundNumber(avgNoOfChars);
     }
 
+    /**
+     * Function to calculate frequently appearing words in a sentence
+     * 
+     * @param words - Array of words from the sentence
+     */
     private void calculateMostFreqWrd(String[] words) {
 
         for (String word : words) {
@@ -69,6 +92,12 @@ public class MetricsCalculation {
         maxFreqWrd = sortedWrdFreqTMap.firstEntry().getKey();
     }
 
+    /**
+     * Function to ge sorted Tree map of words frequency of sentences
+     * 
+     * @param wrdFreqMap -- Word frequency Map object
+     * @return
+     */
     private TreeMap<String, Integer> getSortedMapByValue(Map<String, Integer> wrdFreqMap) {
         Comparator<String> comparator = new ValueComparator(wrdFreqMap);
 
@@ -79,6 +108,11 @@ public class MetricsCalculation {
         return sortedWrdFreqTMap;
     }
 
+    /**
+     * Function to find longest word in a sentence
+     * 
+     * @param words - Array of words of the input sentence
+     */
     private void findLongestWrd(String[] words) {
 
         for (String word : words) {
@@ -89,6 +123,12 @@ public class MetricsCalculation {
         }
     }
 
+    /**
+     * Function to round the number
+     * 
+     * @param number - The number that needs to be rounded
+     * @return - The rounded float value of a number
+     */
     private float roundNumber(float number) {
         DecimalFormat df = new DecimalFormat("#.##");
         return Float.parseFloat(df.format(number));
