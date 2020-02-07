@@ -43,30 +43,37 @@ public class MetricsCalculation {
      */
     public void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
 
-        sentencesProcessed += 1;
-        String[] words = initialSentence.trim().split(utilityConstants.SPLIT_BY_SPACING_REGEXP);
+        try {
+            sentencesProcessed += 1;
+            String[] words = initialSentence.trim().split(utilityConstants.SPLIT_BY_SPACING_REGEXP);
 
-        /**
-         * Invoking the function to calculate average number of words from the sentences
-         */
-        calculateAvgNoOfWords(words);
+            /**
+             * Invoking the function to calculate average number of words from the sentences
+             */
+            calculateAvgNoOfWords(words);
 
-        /**
-         * Invoking the function to calculate average number of character from the
-         * sentences
-         */
-        calculateAvgNoOfChars(initialSentence, newLineCharsCount);
+            /**
+             * Invoking the function to calculate average number of character from the
+             * sentences
+             */
+            calculateAvgNoOfChars(initialSentence, newLineCharsCount);
 
-        /**
-         * Invoking the function to find the most frequently appearing word in the
-         * sentences
-         */
-        calculateMostFreqWrd(words);
+            /**
+             * Invoking the function to find the most frequently appearing word in the
+             * sentences
+             */
+            calculateMostFreqWrd(words);
 
-        /**
-         * Invoking the function to find the longest word in the sentences
-         */
-        findLongestWrd(words);
+            /**
+             * Invoking the function to find the longest word in the sentences
+             */
+            findLongestWrd(words);
+        } catch (Exception e) {
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.err.println(utilityConstants.REVERSE_WORD_EXCEPTION_MSG);
+            e.printStackTrace();
+            System.exit(0);
+        }
 
     }
 

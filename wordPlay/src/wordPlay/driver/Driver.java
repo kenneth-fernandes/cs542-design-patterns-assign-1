@@ -45,7 +45,11 @@ public class Driver {
 		/**
 		 * Initiating the file processing for reading the input file
 		 */
-		fileProcessor.processInputFile();
+		boolean status = fileProcessor.processInputFile();
+
+		if (status) {
+			System.out.println(utilityConstants.PROGRAM_EXECUTION_COMPLETED_MSG);
+		}
 
 	}
 }

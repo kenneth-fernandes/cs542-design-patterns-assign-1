@@ -105,8 +105,9 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
         } catch (Exception e) {
             System.out.println(utilityConstants.LINE_SEPARATOR);
-            System.out.println(utilityConstants.FILE_WRITING_ERROR_MSG);
+            System.err.println(utilityConstants.FILE_WRITING_ERROR_MSG);
             e.printStackTrace();
+            System.exit(0);
 
         }
     }

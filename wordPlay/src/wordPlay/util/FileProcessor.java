@@ -36,7 +36,7 @@ public class FileProcessor {
      * 
      * Function to proces input file
      */
-    public void processInputFile() {
+    public boolean processInputFile() {
         /**
          * Creating the File object in order to
          */
@@ -154,23 +154,29 @@ public class FileProcessor {
                         System.out.println(utilityConstants.INVALID_CHARACTER_ERROR_MSG);
                         inputFileReader.close();
                         deleteFiles(outputFilePath, metricsFilePath);
+                        return false;
                     }
 
                 } else {
                     System.out.println(utilityConstants.EMPTY_FILE_ERROR_MSG);
+                    return false;
                 }
 
             } else {
                 System.out.println(utilityConstants.INPUT_FILE_NOT_EXIST_ERROR_MSG);
+                return false;
             }
 
             inputFileReader.close();
 
+            return true;
+
         } catch (Exception e) {
             System.out.println(utilityConstants.LINE_SEPARATOR);
-            System.out.println(utilityConstants.FILE_PROCESSING_EXCEPTION_MSG);
+            System.err.println(utilityConstants.FILE_PROCESSING_EXCEPTION_MSG);
             e.printStackTrace();
             deleteFiles(outputFilePath, metricsFilePath);
+            return false;
 
         }
 
