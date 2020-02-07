@@ -5,6 +5,9 @@ import wordPlay.processing.SentenceHandler;
 import java.io.*;
 import java.util.Arrays;
 
+/**
+ * Class consisting of methods for processing the file
+ */
 public class FileProcessor {
 
     private String inputFilePath;
@@ -33,7 +36,7 @@ public class FileProcessor {
      * 
      * Function to proces input file
      */
-    public void processInputFile() {
+    public boolean processInputFile() {
         /**
          * Creating the File object in order to
          */
@@ -60,8 +63,8 @@ public class FileProcessor {
                 /**
                  * I nitializing the input and reversed word sentences
                  */
-                String initialSentence = utilityConstants.emptyString;
-                String reversedStr = utilityConstants.emptyString;
+                String initialSentence = utilityConstants.EMPTY_STRING;
+                String reversedStr = utilityConstants.EMPTY_STRING;
 
                 /**
                  * Reading the characters from the file
@@ -84,7 +87,7 @@ public class FileProcessor {
                          * Condition check for (".") period character in order to mark the reading of a
                          * sentence
                          */
-                        if (((char) i) == utilityConstants.periodCharcter) {
+                        if (((char) i) == utilityConstants.PERIOD_CHARACTER) {
 
                             initialSentence = String.copyValueOf(sentenceCharArr).substring(0, index + 1);
 
@@ -98,7 +101,7 @@ public class FileProcessor {
                              * Condition check if the sentence processing method returns an empty string. If
                              * yes then we do not move forward to writing the output to output files
                              */
-                            if (!reversedStr.equals(utilityConstants.emptyString)) {
+                            if (!reversedStr.equals(utilityConstants.EMPTY_STRING)) {
 
                                 /**
                                  * Performing the opertion to write the reversed words sentence to the output
@@ -128,7 +131,7 @@ public class FileProcessor {
                                  * Clearing the contents from the character array storing characters of each
                                  * sentence
                                  */
-                                Arrays.fill(sentenceCharArr, utilityConstants.nullCharacter);
+                                Arrays.fill(sentenceCharArr, utilityConstants.NULL_CHARACTER);
                                 index = -1;
                                 sentenceCharCount = 0;
                                 sentenceCompleted = true;
@@ -147,27 +150,33 @@ public class FileProcessor {
                      * error messsages are printed.
                      */
                     if (!sentenceCompleted) {
-                        System.out.println(utilityConstants.lineSeparator);
-                        System.out.println(utilityConstants.invalidCharsErrorMsg);
+                        System.out.println(utilityConstants.LINE_SEPARATOR);
+                        System.out.println(utilityConstants.INVALID_CHARACTER_ERROR_MSG);
                         inputFileReader.close();
                         deleteFiles(outputFilePath, metricsFilePath);
+                        return false;
                     }
 
                 } else {
-                    System.out.println(utilityConstants.emptyFileErrorMsg);
+                    System.out.println(utilityConstants.EMPTY_FILE_ERROR_MSG);
+                    return false;
                 }
 
             } else {
-                System.out.println(utilityConstants.inputFileNotExistErrorMsg);
+                System.out.println(utilityConstants.INPUT_FILE_NOT_EXIST_ERROR_MSG);
+                return false;
             }
 
             inputFileReader.close();
 
+            return true;
+
         } catch (Exception e) {
-            System.out.println(utilityConstants.lineSeparator);
-            System.out.println(utilityConstants.fileProcessExceptnMsg);
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.err.println(utilityConstants.FILE_PROCESSING_EXCEPTION_MSG);
             e.printStackTrace();
             deleteFiles(outputFilePath, metricsFilePath);
+            return false;
 
         }
 

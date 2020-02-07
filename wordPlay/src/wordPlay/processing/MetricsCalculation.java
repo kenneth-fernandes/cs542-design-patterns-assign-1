@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Comparator;
 
+/**
+ * Class containing the function to calculate the metrics for input sentences
+ */
 public class MetricsCalculation {
 
     private UtilityConstants utilityConstants;
@@ -27,8 +30,8 @@ public class MetricsCalculation {
      */
     public MetricsCalculation(UtilityConstants utilityConstants) {
         this.utilityConstants = utilityConstants;
-        this.maxFreqWrd = utilityConstants.emptyString;
-        this.longstWrd = utilityConstants.emptyString;
+        this.maxFreqWrd = utilityConstants.EMPTY_STRING;
+        this.longstWrd = utilityConstants.EMPTY_STRING;
     }
 
     /**
@@ -40,17 +43,37 @@ public class MetricsCalculation {
      */
     public void performMetricsCalculation(String initialSentence, String finalSentence, int newLineCharsCount) {
 
-        sentencesProcessed += 1;
+        try {
+            sentencesProcessed += 1;
+            String[] words = initialSentence.trim().split(utilityConstants.SPLIT_BY_SPACING_REGEXP);
 
-        String[] words = initialSentence.trim().split(utilityConstants.splitBySpacingRegExp);
+            /**
+             * Invoking the function to calculate average number of words from the sentences
+             */
+            calculateAvgNoOfWords(words);
 
-        calculateAvgNoOfWords(words);
+            /**
+             * Invoking the function to calculate average number of character from the
+             * sentences
+             */
+            calculateAvgNoOfChars(initialSentence, newLineCharsCount);
 
-        calculateAvgNoOfChars(initialSentence, newLineCharsCount);
+            /**
+             * Invoking the function to find the most frequently appearing word in the
+             * sentences
+             */
+            calculateMostFreqWrd(words);
 
-        calculateMostFreqWrd(words);
-
-        findLongestWrd(words);
+            /**
+             * Invoking the function to find the longest word in the sentences
+             */
+            findLongestWrd(words);
+        } catch (Exception e) {
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.err.println(utilityConstants.REVERSE_WORD_EXCEPTION_MSG);
+            e.printStackTrace();
+            System.exit(0);
+        }
 
     }
 
@@ -144,7 +167,7 @@ public class MetricsCalculation {
      * @return - The rounded float value of a number
      */
     private float roundNumber(float number) {
-        DecimalFormat df = new DecimalFormat(utilityConstants.decimalFormatString);
+        DecimalFormat df = new DecimalFormat(utilityConstants.DECIMAL_FORMAT_STRING);
         return Float.parseFloat(df.format(number));
     }
 
