@@ -8,6 +8,9 @@ package wordPlay.driver;
 import wordPlay.util.FileProcessor;
 import wordPlay.util.UtilityConstants;
 
+/**
+ * Driver class containing the entry point of the program
+ */
 public class Driver {
 	/**
 	 * The entry point of the program - main method
@@ -25,10 +28,10 @@ public class Driver {
 		 * is not given java takes the default value specified in build.xml. To avoid
 		 * that, below condition is used
 		 */
-		if ((args.length != 3) || (args[0].equals(utilityConstants.firstArgumentVariableTxt))
-				|| (args[1].equals(utilityConstants.secondArgumentVariableTxt))
-				|| (args[2].equals(utilityConstants.thirdArgumentVariableTxt))) {
-			System.err.println(utilityConstants.invalidArgumentsErroMsg);
+		if ((args.length != 3) || (args[0].equals(utilityConstants.FIRST_ARGUMENT_VARIABLE_TEXT))
+				|| (args[1].equals(utilityConstants.SECOND_ARGUMENT_VARIABLE_TEXT))
+				|| (args[2].equals(utilityConstants.THIRD_ARGUMENT_VARIABLE_TEXT))) {
+			System.err.println(utilityConstants.INVALID_ARGUMENTS_ERROR_MESSAGE);
 			System.exit(0);
 		}
 

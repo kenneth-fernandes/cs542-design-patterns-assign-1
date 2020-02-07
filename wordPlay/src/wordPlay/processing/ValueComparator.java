@@ -4,6 +4,10 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * Class implementing the methods of Comparator interface to compare frequency
+ * of the words
+ */
 class ValueComparator implements Comparator<String> {
 
     Map<String, Integer> wrdFreqMap = new HashMap<String, Integer>();

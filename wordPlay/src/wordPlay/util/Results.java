@@ -4,6 +4,10 @@ import java.io.FileWriter;
 import java.io.File;
 import wordPlay.util.UtilityConstants;
 
+/**
+ * Class consisting of functions to write sentence processing and metrics
+ * results to the output files
+ */
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     private UtilityConstants utilityConstants;
     private String reversedWrdsSentence;
@@ -68,10 +72,10 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
      *                        sentences
      */
     public void writeResultMetricsToFile(String metricsFilePath) {
-        String metricsOutputStr = utilityConstants.averageNoOfWrdsString + avgNoOfWrds + utilityConstants.newLineString
-                + utilityConstants.averageNoOCharsString + avgNoOfChars + utilityConstants.newLineString
-                + utilityConstants.maxFrequencyWrdsString + maxFreqWrd + utilityConstants.newLineString
-                + utilityConstants.longstWrdsString + longstWrd;
+        String metricsOutputStr = utilityConstants.AVG_NO_OF_WORDS_STRING + avgNoOfWrds
+                + utilityConstants.NEW_LINE_STRING + utilityConstants.AVG_NO_OF_CHARACTERS_STRING + avgNoOfChars
+                + utilityConstants.NEW_LINE_STRING + utilityConstants.MAX_FREQUENCY_WORDS_STRING + maxFreqWrd
+                + utilityConstants.NEW_LINE_STRING + utilityConstants.LONGEST_WORDS_STRING + longstWrd;
         writeDataToFile(metricsOutputStr.toCharArray(), metricsFilePath);
     }
 
@@ -100,8 +104,8 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
             outputFileWrtrObj.close();
 
         } catch (Exception e) {
-            System.out.println(utilityConstants.lineSeparator);
-            System.out.println(utilityConstants.fileWritingErrorMsg);
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.out.println(utilityConstants.FILE_WRITING_ERROR_MSG);
             e.printStackTrace();
 
         }

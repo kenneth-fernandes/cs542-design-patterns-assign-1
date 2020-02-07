@@ -4,6 +4,10 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import wordPlay.util.UtilityConstants;
 
+/**
+ * Class consisting of methods and data members used for performing validation
+ * and processing functions to the sentences
+ */
 public class SentenceHandler {
 
     private Matcher matcherObj;
@@ -22,8 +26,8 @@ public class SentenceHandler {
      */
     public SentenceHandler(UtilityConstants utilityConstants) {
         this.utilityConstants = utilityConstants;
-        this.sentenceValidntPatternObj = Pattern.compile(utilityConstants.sentenceValidationRegExp);
-        this.spaceinValidntPatternObj = Pattern.compile(utilityConstants.spacingValidationRegExp);
+        this.sentenceValidntPatternObj = Pattern.compile(utilityConstants.SENTENCE_VALIDATION_REGEXP);
+        this.spaceinValidntPatternObj = Pattern.compile(utilityConstants.SPACING_VALIDATION_REGEXP);
     }
 
     /**
@@ -46,7 +50,7 @@ public class SentenceHandler {
                 /**
                  * Once the sentence is validated, the sentence is passed for revering of words.
                  */
-                String[] words = sentence.split(utilityConstants.splitBySpacingRegExp);
+                String[] words = sentence.split(utilityConstants.SPLIT_BY_SPACING_REGEXP);
                 String reversedStr = getReversedWrdsStr(words);
 
                 /**
@@ -59,10 +63,10 @@ public class SentenceHandler {
                                 + reversedStr.substring(newLinePositionArr[i] + 1, reversedStr.length());
 
                     } else if (newLinePositionArr[i] == sentenceCharsLength - 2) {
-                        reversedStr = reversedStr.substring(0, newLinePositionArr[i]) + utilityConstants.newLineString
-                                + utilityConstants.periodString;
+                        reversedStr = reversedStr.substring(0, newLinePositionArr[i]) + utilityConstants.NEW_LINE_STRING
+                                + utilityConstants.PERIOD_STRING;
                     } else {
-                        reversedStr = reversedStr.substring(0, newLinePositionArr[i]) + utilityConstants.newLineString
+                        reversedStr = reversedStr.substring(0, newLinePositionArr[i]) + utilityConstants.NEW_LINE_STRING
                                 + reversedStr.substring(newLinePositionArr[i] + 1, reversedStr.length());
                     }
 
@@ -72,13 +76,13 @@ public class SentenceHandler {
                 return reversedStr;
 
             } else {
-                return utilityConstants.emptyString;
+                return utilityConstants.EMPTY_STRING;
             }
         } catch (Exception e) {
-            System.out.println(utilityConstants.lineSeparator);
-            System.out.println(utilityConstants.sentenceProcessExceptnMsg);
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.out.println(utilityConstants.SENTENCE_PROCESSING_EXCEPTION_MSG);
             e.printStackTrace();
-            return utilityConstants.emptyString;
+            return utilityConstants.EMPTY_STRING;
         }
 
     }
@@ -107,7 +111,7 @@ public class SentenceHandler {
              */
             while (matcherObj.find()) {
                 count = count + 1;
-                if (sentence.charAt(count - 1) == utilityConstants.newLineCharacter) {
+                if (sentence.charAt(count - 1) == utilityConstants.NEW_LINE_CHARCTER) {
                     newLinePositionArr[newLineCount] = count - 1;
                     newLineCount += 1;
                 }
@@ -134,8 +138,8 @@ public class SentenceHandler {
             return count == 0 ? true : false;
 
         } catch (Exception e) {
-            System.out.println(utilityConstants.lineSeparator);
-            System.out.println(utilityConstants.sentenceValidntExceptnMsg);
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.out.println(utilityConstants.SENTENCE_VALIDATION_EXCEPTION_MSG);
             e.printStackTrace();
             return false;
         }
@@ -152,27 +156,27 @@ public class SentenceHandler {
         /**
          * Logic to reverese each word of the sentence and append it as one sentence
          */
-        String reversedStr = utilityConstants.emptyString;
+        String reversedStr = utilityConstants.EMPTY_STRING;
         try {
             for (int i = 0; i < words.length; i += 1) {
-                String reversedWrd = utilityConstants.emptyString;
+                String reversedWrd = utilityConstants.EMPTY_STRING;
 
                 char[] wordCharArr = words[i].toCharArray();
                 for (int j = wordCharArr.length - 1; j > -1; j -= 1) {
                     reversedWrd = reversedWrd.concat(String.valueOf(wordCharArr[j]));
 
                 }
-                reversedStr = reversedStr.concat(reversedWrd + utilityConstants.spaceString);
+                reversedStr = reversedStr.concat(reversedWrd + utilityConstants.SPACE_STRING);
             }
-            reversedStr = reversedStr.substring(0, reversedStr.length() - 1) + utilityConstants.periodString;
+            reversedStr = reversedStr.substring(0, reversedStr.length() - 1) + utilityConstants.PERIOD_STRING;
 
             return reversedStr;
 
         } catch (Exception e) {
-            System.out.println(utilityConstants.lineSeparator);
-            System.out.println(utilityConstants.reverseWrdExceptnMsg);
+            System.out.println(utilityConstants.LINE_SEPARATOR);
+            System.out.println(utilityConstants.REVERSE_WORD_EXCEPTION_MSG);
             e.printStackTrace();
-            return utilityConstants.emptyString;
+            return utilityConstants.EMPTY_STRING;
         }
     }
 

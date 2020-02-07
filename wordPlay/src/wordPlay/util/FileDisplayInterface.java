@@ -1,5 +1,9 @@
 package wordPlay.util;
 
+/**
+ * Interface containing method definition for writing the output and metrics
+ * into the respective files
+ */
 public interface FileDisplayInterface {
     /**
      * Function to write the reversed words sentences the the output file
